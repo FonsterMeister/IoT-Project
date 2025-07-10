@@ -67,7 +67,7 @@ Make use of this [diagram](https://datasheets.raspberrypi.com/picow/PicoW-A4-Pin
 
 ## Platform
 
-Adafruit IO was chosen due to its ease of use and useful tools for showcasing data. Since the information gathered by this IoT system might be of interest all the people living in a residence, a discord server was chosen to host the notifications. Additonally the tools offered by Adafruit made this a simple integration, using discord webhooks.
+Adafruit IO was chosen due to its ease of use and useful tools for showcasing data. Since the information gathered by this IoT system might be of interest all the people living in a residence, a discord server was chosen to host the notifications. Additionally the tools offered by Adafruit made this a simple integration, using discord webhooks.
 
 ## The code
 
@@ -93,7 +93,7 @@ AIO_MAGNET_FEED = "{username}/feeds/magnet"
 AIO_CAMERA_FEED = "{username}/feeds/picture"
 ```
 #### `wifiConnections.py`
-This code contains two functions. `connect()` ensures you to the wifi according the information provided in `keys.py` and prints "connecting to network..." and continuosly prints another dot each second until the connection has been established. `disconnect()` disconnects the Pico from the wifi.
+This code contains two functions. `connect()` ensures you are connected to the wifi according to the information provided in `keys.py` and prints "connecting to network..." and continuously prints another dot each second until the connection has been established. `disconnect()` disconnects the Pico from the wifi.
 ```python=
 import keys
 import network
@@ -124,7 +124,7 @@ def disconnect():
 ```
 
 #### `main.py`
-This file contain several functions. `get_value()` provides the data the sensor is detecting which is either a 1 if the door is open or 0 if it is closed. `send_trigger()` sends a trigger to the server to fetch the image from the camera and publish it to the discord server. `send_value` handles the data gained from the sensor and if the state of the door has changed, the data is published to Adafruit, and if the door is open, `send_trigger()` is called. The main function continuosly loops `send_value()`.
+This file contains several functions. `get_value()` provides the data the sensor is detecting which is either a 1 if the door is open or 0 if it is closed. `send_trigger()` sends a trigger to the server to fetch the image from the camera and publish it to the discord server. `send_value` handles the data gained from the sensor and if the state of the door has changed, the data is published to Adafruit, and if the door is open, `send_trigger()` is called. The main function continuously loops `send_value()`.
 ```python=
 import time                   # Allows use of time.sleep() for delays
 from mqtt import MQTTClient   # For use of MQTT protocol to talk to Adafruit IO
@@ -281,11 +281,11 @@ if __name__ == '__main__':
 ## Transmitting the data / connectivity
 
 #### Frequency of data being sent
-Data is transmitted only at moments of change; when the system is first activated and then whenever the state of door changes, either from beings closed to opened or vice versa. To reduce faulty readings and avoid overloading and prevents exceeding upload limits on Adafruit IO and Discord.
+Data is transmitted only at moments of change; when the system is first activated and then whenever the state of the door changes, either from being closed to opened or vice versa. To reduce faulty readings and avoid overloading and prevent exceeding upload limits on Adafruit IO and Discord a 5 second timeout is in effect.
 
 #### Wireless protocols
 The Raspberry Pi Pico WH utilizes WiFi to communicate. It communicates with:
-* Adafurit IO via the MQTT protocol
+* Adafruit IO via the MQTT protocol
 * A local flask server over HTTP
 
 The Flask server, also running on a device that utilizes WiFi, communicates with:
@@ -297,7 +297,7 @@ The data is visualized on Adafruit using a graph showing at which points the doo
 
 ![dash](Assets/dash.png)
 
-Additonally another way the status of the door has been visualized is the picture sent to discord and the messages of whether the door is open or closed. Messages on discord are kept indefinietly or until discord is discontinued. Adafruit was chosen as a way to display the activity of the door, and extending the period the data was kept could have enabled for better visualization, but the main focus was on the picture of the door opening, which is kept indefinietly and shared with everyone that is a member of the discord server.
+Additionally another way the status of the door has been visualized are the pictures sent to discord and the messages of whether the door is open or closed. Messages on discord are kept indefinitely or until discord is discontinued. Adafruit was chosen as a way to display the activity of the door, and extending the period the data was kept could have enabled for better visualization, but the main focus was on the picture of the door opening, which is kept indefinitely and shared with everyone that is a member of the discord server.
 
 ![dis](Assets/dis.png)
 
@@ -305,11 +305,11 @@ The data, as previously discussed, is sent whenever the state of the door change
 
 ## Finalizing the design
 
-I definietly would have liked to contain the electronics more neatly, but due to time constraintments, that wassn't achieved. 
+I definitely would have liked to contain the electronics more neatly, but due to time constraints, that wasn't achieved. 
 ![ele](Assets/ele.jpg)
 
 
-A more advanced system would have sent videos a few seconds after the door opening or until the door closed to account for more than one or a few people entering or exiting the door. Additonally some sort of motion sensor could have been used as a solution to the cases where the door is just left open for a while. Despite the many improvements that could have been made, I still think the project went well and achieved what I set out to do.
+A more advanced system would have sent videos a few seconds after the door opening or until the door closed to account for more than one or a few people entering or exiting the door. Additionally some sort of motion sensor could have been used as a solution to the cases where the door is just left open for a while. Despite the many improvements that could have been made, I still think the project went well and achieved what I set out to do.
 
 #### Video of my project
 [![Video of my project](https://img.youtube.com/vi/Q4C09NGN4Ss/hqdefault.jpg)](https://www.youtube.com/watch?v=Q4C09NGN4Ss)
